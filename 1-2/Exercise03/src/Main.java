@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        Manager manager = new Manager("Avril Aroldo", "123 Main St", 40000, "Manager");
-        Developer developer = new Developer("Iver Dipali", "456 Elm St", 36000, "Developer");
-        Programmer programmer = new Programmer("Yaron Gabriel", "789 Oak St", 36480, "Programmer");
+        Employee manager = new Manager("Avril Aroldo", "123 Main St", 40000, "Manager");
+        Employee developer = new Developer("Iver Dipali", "456 Elm St", 36000, "Developer");
+        Employee programmer = new Programmer("Yaron Gabriel", "789 Oak St", 36480, "Programmer");
 
         System.out.println("Manager's Bonus: $" + manager.calculateBonus());
         System.out.println("Developer's Bonus: $" + developer.calculateBonus());
@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Performance report for Programmer " + programmer.name + ": " + programmer.generatePerformanceReport());
 
         manager.manageProject();
-        developer.writeCode();
-        programmer.debugCode();
+        ((Developer) developer).writeCode();
+        ((Programmer) programmer).debugCode();
     }
 }

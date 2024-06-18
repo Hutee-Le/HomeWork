@@ -4,9 +4,9 @@ public class Main {
         employee.work();
         employee.getSalary();
 
-        Employee hr = new HRManager();
-        hr.work();
-        hr.getSalary();
-        hr.addEmployee();
+        Employee hrManager = new HRManager();
+        hrManager.work();
+        hrManager.getSalary();
+        ((HRManager) hrManager).addEmployee();
     }
 }

@@ -8,6 +8,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Application {
+    /**
+     * this method is print menu
+     */
     public static void printMenu(){
         System.out.println("\n--- Quản Lý Đặt Phòng Khách Sạn ---");
         System.out.println("1. Xem danh sách phòng");
@@ -22,6 +25,33 @@ public class Application {
         System.out.print("Vui lòng chọn: ");
     }
 
+    /**
+     * this method is check valid input number
+     * @param scanner
+     * @return number from input
+     */
+    public static int getIntInput(Scanner scanner) {
+        while (!scanner.hasNextInt()){
+            System.out.print("Lựa chọn không hợp lệ. Vui lòng chọn [1-9]: ");
+            scanner.next();
+        }
+        return scanner.nextInt();
+    }
+
+    public static int getInputRoomNumber(Scanner scanner){
+        int roomNumber = 0;
+        boolean valid = false;
+        do {
+            try {
+                roomNumber = Integer.parseInt(scanner.nextLine().trim());
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.print("Định dạng sai. Vui lòng nhập lại số phòng:");
+            }
+        } while (!valid);
+
+        return roomNumber;
+    }
 
     public static void main(String[] args) {
         Manager manager = new Manager();
@@ -29,7 +59,7 @@ public class Application {
 
         while (true) {
             printMenu();
-            int choice = scanner.nextInt();
+            int choice = getIntInput(scanner);
             scanner.nextLine();
 
             try {
@@ -39,29 +69,29 @@ public class Application {
                         break;
                     case 2:
                         System.out.print("Nhập ID phòng: ");
-                        int roomID = scanner.nextInt();
+                        int roomID = getInputRoomNumber(scanner);
                         manager.displayRoomDetail(roomID);
                         break;
                     case 3:
                         System.out.print("Nhập tên phòng: ");
                         String roomName = scanner.nextLine();
                         System.out.print("Nhập số phòng: ");
-                        int roomNumber = scanner.nextInt();
+                        int roomNumber = getInputRoomNumber(scanner);
                         manager.addRoom(roomName, roomNumber);
                         break;
                     case 4:
                         System.out.print("Nhập ID phòng cần sửa: ");
-                        int updateRoomID = scanner.nextInt();
+                        int updateRoomID = getInputRoomNumber(scanner);
                         scanner.nextLine();
                         System.out.print("Nhập tên phòng mới: ");
                         String newRoomName = scanner.nextLine();
                         System.out.print("Nhập số phòng mới: ");
-                        int newRoomNumber = scanner.nextInt();
+                        int newRoomNumber = getInputRoomNumber(scanner);
                         manager.updateRoom(updateRoomID, newRoomName, newRoomNumber);
                         break;
                     case 5:
                         System.out.print("Nhập ID phòng cần xoá: ");
-                        int deleteRoomID = scanner.nextInt();
+                        int deleteRoomID = getInputRoomNumber(scanner);
                         manager.deleteRoom(deleteRoomID);
                         break;
                     case 6:
@@ -74,7 +104,7 @@ public class Application {
                         System.out.print("Nhập tuổi: ");
                         int age = scanner.nextInt();
                         System.out.print("Nhập ID phòng: ");
-                        int customerRoomID = scanner.nextInt();
+                        int customerRoomID = getInputRoomNumber(scanner);
                         manager.addCustomer(customerName, age, customerRoomID);
                         break;
                     case 8:
@@ -100,7 +130,7 @@ public class Application {
                         scanner.close();
                         return;
                     default:
-                        System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                        System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn [1-9]:");
             }
 
             } catch(Exception e) {

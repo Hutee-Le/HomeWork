@@ -8,6 +8,7 @@ public class Customer {
     private LocalDateTime checkInDate;
     private LocalDateTime checkOutDate;
 
+    // constructor
     public Customer(String customerName, int age, LocalDateTime checkInDate) {
         this.customerName = customerName;
         this.age = age;

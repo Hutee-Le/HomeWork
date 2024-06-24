@@ -7,6 +7,7 @@ public abstract class AbstractRoom {
     private boolean isBooked;
     private Customer customer;
 
+    // constructor
     public AbstractRoom(int roomID, String roomName, int roomNumber){
         this.roomID = roomID;
         this.roomName = roomName;
@@ -15,6 +16,7 @@ public abstract class AbstractRoom {
         this.customer = null;
     }
 
+    // Getters and setters
     public int getRoomID() { return roomID; }
 
     public String getRoomName() { return roomName; }

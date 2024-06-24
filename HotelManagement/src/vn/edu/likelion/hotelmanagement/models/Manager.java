@@ -18,7 +18,7 @@ public class Manager implements IManagement {
     }
 
     /**
-     *  this method is add room
+     *  this method is add new room
      * @param roomName @{String}
      * @param roomNumber @{int}
      * return result of room
@@ -38,6 +38,12 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * updates infor of room
+     * @param roomID
+     * @param newRoomName
+     * @param newRoomNumber
+     */
     @Override
     public void updateRoom(int roomID, String newRoomName, int newRoomNumber) {
         try {
@@ -57,6 +63,10 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * delete a room
+     * @param roomID
+     */
     @Override
     public void deleteRoom(int roomID) {
         try {
@@ -72,6 +82,9 @@ public class Manager implements IManagement {
 
     }
 
+    /**
+     * display all of the rooms in hotel
+     */
     @Override
     public void displayRooms() {
         System.out.printf("%-5s %-10s %-20s %-10s %-10s%n", "STT", "ID Phòng", "Tên Phòng", "Số Phòng", "Trạng Thái");
@@ -81,6 +94,10 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * this method display detail of room by roomID
+     * @param roomID
+     */
     @Override
     public void displayRoomDetail(int roomID) {
         try {
@@ -107,6 +124,12 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * this method is add new customer to the room
+     * @param customerName
+     * @param age
+     * @param roomID
+     */
     public void addCustomer(String customerName, int age, int roomID){
         try {
             if(age < 18) {
@@ -138,6 +161,11 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * this method is update cutomer is checkout
+     * @param customerName
+     * @param checkOutDate
+     */
     public void updateCustomer(String customerName, LocalDateTime checkOutDate) {
         try {
             boolean customerFound = false;
@@ -162,6 +190,9 @@ public class Manager implements IManagement {
         }
     }
 
+    /**
+     * this is method display all customer in hotel
+     */
     public void displayCustomers() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -175,6 +206,12 @@ public class Manager implements IManagement {
         }
     }
 
+
+    /**
+     * this method get room name by customer
+     * @param customer
+     * @return string room name
+     */
     private String getRoomNameByCustomer(Customer customer) {
         for (Room room : rooms) {
             if (room.getCustomer() != null && room.getCustomer().equals(customer)) {
@@ -184,6 +221,11 @@ public class Manager implements IManagement {
         return "";
     }
 
+    /**
+     * this is method get room number by customer
+     * @param customer
+     * @return int number of room
+     */
     private int getRoomNumberByCustomer(Customer customer) {
         for (Room room : rooms) {
             if (room.getCustomer() != null && room.getCustomer().equals(customer)) {

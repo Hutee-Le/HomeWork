@@ -8,6 +8,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Application {
+    private static Scanner scanner = new Scanner(System.in);
+
     /**
      * this method is print menu
      */
@@ -53,9 +55,31 @@ public class Application {
         return roomNumber;
     }
 
+    public static String getStringInput() {
+        return scanner.nextLine().trim();
+    }
+
+    public static int getValidAgeInput() {
+        int age = 0;
+        boolean valid = false;
+        do {
+            try {
+                age = Integer.parseInt(scanner.nextLine().trim());
+                if (age >= 0) {
+                    valid = true;
+                } else {
+                    System.out.print("Tuổi không thể âm. Vui lòng nhập lại tuổi: ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.print("Định dạng sai. Vui lòng nhập lại tuổi: ");
+            }
+        } while (!valid);
+
+        return age;
+    }
+
     public static void main(String[] args) {
         Manager manager = new Manager();
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             printMenu();
@@ -74,7 +98,7 @@ public class Application {
                         break;
                     case 3:
                         System.out.print("Nhập tên phòng: ");
-                        String roomName = scanner.nextLine();
+                        String roomName = getStringInput();
                         System.out.print("Nhập số phòng: ");
                         int roomNumber = getInputRoomNumber(scanner);
                         manager.addRoom(roomName, roomNumber);
@@ -82,9 +106,9 @@ public class Application {
                     case 4:
                         System.out.print("Nhập ID phòng cần sửa: ");
                         int updateRoomID = getInputRoomNumber(scanner);
-                        scanner.nextLine();
+//                        scanner.nextLine();
                         System.out.print("Nhập tên phòng mới: ");
-                        String newRoomName = scanner.nextLine();
+                        String newRoomName = getStringInput();
                         System.out.print("Nhập số phòng mới: ");
                         int newRoomNumber = getInputRoomNumber(scanner);
                         manager.updateRoom(updateRoomID, newRoomName, newRoomNumber);
@@ -100,9 +124,9 @@ public class Application {
 
                     case 7:
                         System.out.print("Nhập tên khách hàng: ");
-                        String customerName = scanner.nextLine();
+                        String customerName = getStringInput();
                         System.out.print("Nhập tuổi: ");
-                        int age = scanner.nextInt();
+                        int age = getValidAgeInput();
                         System.out.print("Nhập ID phòng: ");
                         int customerRoomID = getInputRoomNumber(scanner);
                         manager.addCustomer(customerName, age, customerRoomID);
@@ -114,7 +138,7 @@ public class Application {
 
                         while (!valid) {
                             System.out.print("Nhập ngày trả phòng (yyyy-MM-dd HH:mm): ");
-                            String checkOutDateStr = scanner.nextLine();
+                            String checkOutDateStr = getStringInput();
                             try {
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 LocalDateTime checkOutDate = LocalDateTime.parse(checkOutDateStr, formatter);

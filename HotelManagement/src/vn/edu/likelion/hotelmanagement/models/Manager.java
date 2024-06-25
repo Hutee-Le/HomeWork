@@ -18,28 +18,30 @@ public class Manager implements IManagement {
     }
 
     /**
-     *  this method is add new room
-     * @param roomName @{String}
+     * this method is add new room
+     *
+     * @param roomName   @{String}
      * @param roomNumber @{int}
-     * return result of room
+     *                   return result of room
      */
     @Override
-    public void addRoom(String roomName, int roomNumber){
+    public void addRoom(String roomName, int roomNumber) {
         try {
-            if(rooms.size() < 5) {
+            if (rooms.size() < 5) {
                 Room room = new Room(nextRoomId++, roomName, roomNumber);
                 rooms.add(room);
                 System.out.println("Đã thêm phòng thành công.");
             } else {
                 throw new Exception("Chỉ được tổ chức tối đa 5 phòng.");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
      * updates infor of room
+     *
      * @param roomID
      * @param newRoomName
      * @param newRoomNumber
@@ -65,6 +67,7 @@ public class Manager implements IManagement {
 
     /**
      * delete a room
+     *
      * @param roomID
      */
     @Override
@@ -96,6 +99,7 @@ public class Manager implements IManagement {
 
     /**
      * this method display detail of room by roomID
+     *
      * @param roomID
      */
     @Override
@@ -126,19 +130,20 @@ public class Manager implements IManagement {
 
     /**
      * this method is add new customer to the room
+     *
      * @param customerName
      * @param age
      * @param roomID
      */
-    public void addCustomer(String customerName, int age, int roomID){
+    public void addCustomer(String customerName, int age, int roomID) {
         try {
-            if(age < 18) {
+            if (age < 18) {
                 throw new Exception("Khách hàng phải trên 18 tuổi");
             }
 
             boolean roomFound = false;
             for (Room room : rooms) {
-                if(room.getRoomID() == roomID){
+                if (room.getRoomID() == roomID) {
                     roomFound = true;
                     if (!room.isBooked()) {
                         Customer customer = new Customer(customerName, age, LocalDateTime.now());
@@ -153,16 +158,16 @@ public class Manager implements IManagement {
             }
 
             if (!roomFound) {
-                throw new Exception("Không tìm thấy phòng với ID: "+ roomID);
+                throw new Exception("Không tìm thấy phòng với ID: " + roomID);
             }
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
      * this method is update cutomer is checkout
+     *
      * @param customerName
      * @param checkOutDate
      */
@@ -209,6 +214,7 @@ public class Manager implements IManagement {
 
     /**
      * this method get room name by customer
+     *
      * @param customer
      * @return string room name
      */
@@ -223,6 +229,7 @@ public class Manager implements IManagement {
 
     /**
      * this is method get room number by customer
+     *
      * @param customer
      * @return int number of room
      */

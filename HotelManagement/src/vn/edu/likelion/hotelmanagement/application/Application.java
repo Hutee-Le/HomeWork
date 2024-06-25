@@ -13,7 +13,7 @@ public class Application {
     /**
      * this method is print menu
      */
-    public static void printMenu(){
+    public static void printMenu() {
         System.out.println("\n--- Quản Lý Đặt Phòng Khách Sạn ---");
         System.out.println("1. Xem danh sách phòng");
         System.out.println("2. Xem chi tiết phòng");
@@ -29,18 +29,19 @@ public class Application {
 
     /**
      * this method is check valid input number
+     *
      * @param scanner
      * @return number from input
      */
     public static int getIntInput(Scanner scanner) {
-        while (!scanner.hasNextInt()){
+        while (!scanner.hasNextInt()) {
             System.out.print("Lựa chọn không hợp lệ. Vui lòng chọn [1-9]: ");
             scanner.next();
         }
         return scanner.nextInt();
     }
 
-    public static int getInputRoomNumber(Scanner scanner){
+    public static int getInputRoomNumber(Scanner scanner) {
         int roomNumber = 0;
         boolean valid = false;
         do {
@@ -87,7 +88,7 @@ public class Application {
             scanner.nextLine();
 
             try {
-                switch (choice){
+                switch (choice) {
                     case 1:
                         manager.displayRooms();
                         break;
@@ -155,9 +156,9 @@ public class Application {
                         return;
                     default:
                         System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn [1-9]:");
-            }
+                }
 
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }

@@ -8,7 +8,7 @@ public abstract class AbstractRoom {
     private Customer customer;
 
     // constructor
-    public AbstractRoom(int roomID, String roomName, int roomNumber){
+    public AbstractRoom(int roomID, String roomName, int roomNumber) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.roomNumber = roomNumber;
@@ -17,15 +17,25 @@ public abstract class AbstractRoom {
     }
 
     // Getters and setters
-    public int getRoomID() { return roomID; }
+    public int getRoomID() {
+        return roomID;
+    }
 
-    public String getRoomName() { return roomName; }
+    public String getRoomName() {
+        return roomName;
+    }
 
-    public int getRoomNumber() { return roomNumber; }
+    public int getRoomNumber() {
+        return roomNumber;
+    }
 
-    public boolean isBooked() { return isBooked; }
+    public boolean isBooked() {
+        return isBooked;
+    }
 
-    public Customer getCustomer() { return customer; }
+    public Customer getCustomer() {
+        return customer;
+    }
 
     public void setRoomId(int roomID) {
         this.roomID = roomID;

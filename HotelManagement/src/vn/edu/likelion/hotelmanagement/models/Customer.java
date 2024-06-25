@@ -17,11 +17,24 @@ public class Customer {
     }
 
     // Getters and setters
-    public String getCustomerName() { return customerName; }
-    public int getAge() { return age; }
-    public LocalDateTime getCheckInDate() { return checkInDate; }
-    public LocalDateTime getCheckOutDate() { return checkOutDate; }
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    public void setCheckOutDate(LocalDateTime checkOutDate) { this.checkOutDate = checkOutDate; }
+    public int getAge() {
+        return age;
+    }
+
+    public LocalDateTime getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDateTime getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDateTime checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
 
 }

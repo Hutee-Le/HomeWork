@@ -3,15 +3,15 @@ package vn.edu.likelion.hotelmanagement.models;
 import java.time.LocalDateTime;
 
 public class Customer {
-    private int userID;
+    private int customerID;
     private String customerName;
     private int age;
     private LocalDateTime checkInDate;
     private LocalDateTime checkOutDate;
 
     // constructor
-    public Customer(int userID,String customerName, int age, LocalDateTime checkInDate) {
-        this.userID = userID;
+    public Customer(int customerID,String customerName, int age, LocalDateTime checkInDate) {
+        this.customerID = customerID;
         this.customerName = customerName;
         this.age = age;
         this.checkInDate = checkInDate;
@@ -20,8 +20,8 @@ public class Customer {
 
     // Getters and setters
 
-    public int getUserID() {
-        return userID;
+    public int getCustomerID() {
+        return customerID;
     }
 
     public String getCustomerName() {

@@ -176,7 +176,7 @@ public class Manager implements IManagement {
         try {
             Customer customerUpdate = null;
             for (Customer customer : customers) {
-                if (customer.getUserID() == customerId) {
+                if (customer.getCustomerID() == customerId) {
                     customerUpdate = customer;
                     break;
                 }
@@ -189,7 +189,7 @@ public class Manager implements IManagement {
             if (checkOutDate.isAfter(customerUpdate.getCheckInDate())) {
                 customerUpdate.setCheckOutDate(checkOutDate);
                 for (Room room : rooms) {
-                    if (room.getCustomer() != null && room.getCustomer().getUserID() == customerId) {
+                    if (room.getCustomer() != null && room.getCustomer().getCustomerID() == customerId) {
                         room.freeRoom();
                     }
                 }
@@ -247,5 +247,11 @@ public class Manager implements IManagement {
             }
         }
         return -1;
+    }
+
+    public void initRoom() {
+        addRoom("Room 101", 101);
+        addRoom("Room 102", 102);
+        addRoom("Room 201", 201);
     }
 }

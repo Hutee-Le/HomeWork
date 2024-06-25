@@ -81,6 +81,7 @@ public class Application {
 
     public static void main(String[] args) {
         Manager manager = new Manager();
+        manager.initRoom();
 
         while (true) {
             printMenu();

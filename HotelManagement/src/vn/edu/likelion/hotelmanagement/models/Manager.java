@@ -11,6 +11,7 @@ public class Manager implements IManagement {
     private List<Room> rooms;
     private List<Customer> customers;
     private int nextRoomId = 1;
+    private int nextCustomerId = 1;
 
     public Manager() {
         rooms = new ArrayList<>();
@@ -146,7 +147,7 @@ public class Manager implements IManagement {
                 if (room.getRoomID() == roomID) {
                     roomFound = true;
                     if (!room.isBooked()) {
-                        Customer customer = new Customer(customerName, age, LocalDateTime.now());
+                        Customer customer = new Customer(nextCustomerId++ ,customerName, age, LocalDateTime.now());
                         customers.add(customer);
                         room.bookRoom(customer);
                         System.out.println("Đã thêm khách hàng thành công.");
@@ -168,27 +169,33 @@ public class Manager implements IManagement {
     /**
      * this method is update cutomer is checkout
      *
-     * @param customerName
+     * @param customerId
      * @param checkOutDate
      */
-    public void updateCustomer(String customerName, LocalDateTime checkOutDate) {
+    public void updateCustomer(int customerId, LocalDateTime checkOutDate) {
         try {
-            boolean customerFound = false;
+            Customer customerUpdate = null;
             for (Customer customer : customers) {
-                if (customer.getCustomerName().equals(customerName)) {
-                    customer.setCheckOutDate(checkOutDate);
-                    for (Room room : rooms) {
-                        if (room.getCustomer() != null && room.getCustomer().getCustomerName().equals(customerName)) {
-                            room.freeRoom();
-                        }
-                    }
-                    customerFound = true;
-                    System.out.println("Đã cập nhật thông tin khách hàng thành công.");
+                if (customer.getUserID() == customerId) {
+                    customerUpdate = customer;
                     break;
                 }
             }
-            if (!customerFound) {
-                throw new Exception("Không tìm thấy khách hàng với tên: " + customerName);
+
+            if (customerUpdate == null) {
+                throw new Exception("Không tìm thấy khách hàng với ID: " + customerId);
+            }
+
+            if (checkOutDate.isAfter(customerUpdate.getCheckInDate())) {
+                customerUpdate.setCheckOutDate(checkOutDate);
+                for (Room room : rooms) {
+                    if (room.getCustomer() != null && room.getCustomer().getUserID() == customerId) {
+                        room.freeRoom();
+                    }
+                }
+                System.out.println("Đã cập nhật thông tin khách hàng thành công.");
+            } else {
+                System.out.println("Ngày trả phòng phải sau ngày đặt phòng.");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

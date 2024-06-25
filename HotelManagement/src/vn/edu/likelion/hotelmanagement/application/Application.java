@@ -134,8 +134,9 @@ public class Application {
                         break;
                     case 8:
                         boolean valid = false;
-                        System.out.print("Nhập tên khách hàng: ");
-                        String updateCustomerName = scanner.nextLine();
+                        System.out.print("Nhập id khách hàng: ");
+                        int customerID = scanner.nextInt();
+                        scanner.nextLine();
 
                         while (!valid) {
                             System.out.print("Nhập ngày trả phòng (yyyy-MM-dd HH:mm): ");
@@ -144,7 +145,7 @@ public class Application {
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 LocalDateTime checkOutDate = LocalDateTime.parse(checkOutDateStr, formatter);
                                 valid = true;
-                                manager.updateCustomer(updateCustomerName, checkOutDate);
+                                manager.updateCustomer(customerID, checkOutDate);
                             } catch (DateTimeParseException e) {
                                 System.out.println("Định dạng ngày giờ không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd HH:mm.");
                             }

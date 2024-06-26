@@ -4,9 +4,13 @@ import vn.edu.likelion.lession1.models.Bank;
 import vn.edu.likelion.lession1.models.CurrentAccount;
 import vn.edu.likelion.lession1.models.Customer;
 import vn.edu.likelion.lession1.models.SavingsAccount;
+import vn.edu.likelion.lession2.model.Manager;
+import vn.edu.likelion.lession2.model.Programmer;
 
 public class Application {
     public static void main(String[] args) {
+        // lession 01
+        System.out.println("*--------------------------------------------------------------------*");
         Customer customer = new Customer("001", "Nhut", 5000);
         Bank bank = new Bank();
 
@@ -39,5 +43,16 @@ public class Application {
         System.out.println("Savings A/c and Current A/c.:");
         System.out.println("Account balance: " + savingsAccount.getBalance());
         System.out.println("Account balance: " + customer.getCurrentAccount().getBalance());
+
+        System.out.println("*--------------------------------------------------------------------*");
+        // lession 02
+        Manager manager = new Manager("Corona Cadogan", 6000, 1000);
+        manager.displayInfo();
+
+        System.out.println("----------------------------------");
+
+        Programmer programmer = new Programmer("Antal Nuka", 5000, 20, 25);
+        programmer.displayInfo();
+
     }
 }

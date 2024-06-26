@@ -1,15 +1,22 @@
 package vn.edu.likelion.lession1.models;
 
-public class CurrentAccount extends Account {
-    private final double OVERDRAFT_LIMIT = 1000;
+import vn.edu.likelion.lession1.services.IService;
+
+public class CurrentAccount extends Account implements IService {
+    private static final double OVERDRAFT_LIMIT = 1000.0;
 
     public CurrentAccount(double initialDeposit) {
-        super(initialDeposit);
+        this.balance = initialDeposit;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
     }
 
     @Override
     public void withdraw(double amount) {
-        if (amount <= balance + OVERDRAFT_LIMIT) {
+        if (balance + OVERDRAFT_LIMIT >= amount) {
             balance -= amount;
         } else {
             System.out.println("Overdraft limit exceeded");
@@ -22,10 +29,7 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public void applyInterest() {
-    }
-
-    public double getOVERDRAFT_LIMIT() {
-        return OVERDRAFT_LIMIT;
+    public double getBalance() {
+        return balance;
     }
 }

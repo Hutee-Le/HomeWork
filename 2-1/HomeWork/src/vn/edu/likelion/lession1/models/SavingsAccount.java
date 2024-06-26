@@ -1,23 +1,36 @@
 package vn.edu.likelion.lession1.models;
 
-public class SavingsAccount extends Account  {
-    private final double INTEREST_RATE = 1.25;
+import vn.edu.likelion.lession1.services.IService;
+
+public class SavingsAccount extends Account implements IService {
+    private static final double INTEREST_RATE = 1.25 / 100;
 
     public SavingsAccount(double initialDeposit) {
-        super(initialDeposit);
+        this.balance = initialDeposit;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient funds for withdrawal");
+        }
     }
 
     @Override
     public double calculateInterest() {
-        return balance * (INTEREST_RATE / 100);
+        balance += balance * INTEREST_RATE;
+        return balance;
     }
 
     @Override
-    public void applyInterest() {
-        balance += calculateInterest();
-    }
-
-    public double getINTEREST_RATE() {
-        return INTEREST_RATE;
+    public double getBalance() {
+        return balance;
     }
 }

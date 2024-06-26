@@ -1,49 +1,40 @@
 package vn.edu.likelion.application;
 
-import vn.edu.likelion.lession1.models.Bank;
+import vn.edu.likelion.lession1.models.Account;
 import vn.edu.likelion.lession1.models.CurrentAccount;
-import vn.edu.likelion.lession1.models.Customer;
 import vn.edu.likelion.lession1.models.SavingsAccount;
 import vn.edu.likelion.lession2.model.Manager;
 import vn.edu.likelion.lession2.model.Programmer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
         // lession 01
         System.out.println("*--------------------------------------------------------------------*");
-        Customer customer = new Customer("001", "Nhut", 5000);
-        Bank bank = new Bank();
+        List<Account> accounts = new ArrayList<>();
 
-        SavingsAccount savingsAccount = new SavingsAccount(1000);
+        SavingsAccount savingsAccount = new SavingsAccount(1000.0);
+        CurrentAccount currentAccount = new CurrentAccount(5000.0);
 
-        customer.addSavingAccount(savingsAccount);
+        accounts.add(savingsAccount);
+        accounts.add(currentAccount);
 
-        bank.addAccount(savingsAccount);
-        bank.addAccount(customer.getCurrentAccount());
+        savingsAccount.deposit(100.0);
+        currentAccount.deposit(500.0);
 
-        System.out.println("Saving Account:");
-        System.out.println("Initial Deposit: $" + savingsAccount.getBalance());
-        System.out.println("Overdraft Limit: " + savingsAccount.getINTEREST_RATE() + "%");
+        savingsAccount.withdraw(150.0);
 
-        System.out.println("Current Account:");
-        System.out.println("Initial Deposit: $" + customer.getCurrentAccount().getBalance());
-        System.out.println("OverdraftLimit: $" + customer.getCurrentAccount().getOVERDRAFT_LIMIT());
+        for (Account account : accounts) {
+            System.out.println(account.getClass().getSimpleName() + " balance: " + account.getBalance());
+        }
 
-        savingsAccount.deposit(100);
-        customer.getCurrentAccount().deposit(500);
-        savingsAccount.withdraw(150);
+        savingsAccount.calculateInterest();
 
-        System.out.println("Savings A/c and Current A/c.:");
-        System.out.println("Account balance: " + savingsAccount.getBalance());
-        System.out.println("Account balance: " + customer.getCurrentAccount().getBalance());
-
-        bank.calculateAnnualInterest();
-
-        System.out.println("After applying interest on Savings A/c for 1 year:");
-        System.out.println("Savings A/c and Current A/c.:");
-        System.out.println("Account balance: " + savingsAccount.getBalance());
-        System.out.println("Account balance: " + customer.getCurrentAccount().getBalance());
-
+        for (Account account : accounts) {
+            System.out.println(account.getClass().getSimpleName() + " balance after interest: " + account.getBalance());
+        }
         System.out.println("*--------------------------------------------------------------------*");
         // lession 02
         Manager manager = new Manager("Corona Cadogan", 6000, 1000);

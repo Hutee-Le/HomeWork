@@ -17,6 +17,10 @@ public class Application {
         bank.addAccount(savingsAccount);
         bank.addAccount(customer.getCurrentAccount());
 
+        System.out.println("Saving Account:");
+        System.out.println("Initial Deposit: $" + savingsAccount.getBalance());
+        System.out.println("Overdraft Limit: " + savingsAccount.getINTEREST_RATE() + "%");
+
         System.out.println("Current Account:");
         System.out.println("Initial Deposit: $" + customer.getCurrentAccount().getBalance());
         System.out.println("OverdraftLimit: $" + customer.getCurrentAccount().getOVERDRAFT_LIMIT());

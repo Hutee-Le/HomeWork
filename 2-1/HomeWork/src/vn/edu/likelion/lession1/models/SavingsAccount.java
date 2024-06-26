@@ -16,4 +16,8 @@ public class SavingsAccount extends Account  {
     public void applyInterest() {
         balance += calculateInterest();
     }
+
+    public double getINTEREST_RATE() {
+        return INTEREST_RATE;
+    }
 }

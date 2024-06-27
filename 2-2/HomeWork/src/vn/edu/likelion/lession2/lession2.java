@@ -1,6 +1,6 @@
-package vn.edu.likelion.lession1;
+package vn.edu.likelion.lession2;
 
-public class lession1 {
+public class lession2 {
     public static boolean checkDigitIsEven(int number){
         if (number == 0) {
             return false;
@@ -8,12 +8,12 @@ public class lession1 {
 
         while (number != 0){
             if ((number % 10) % 2 != 0){
-                return false;
+                return true;
             }
 
             number /= 10;
         }
 
-        return true;
+        return false;
     }
 }

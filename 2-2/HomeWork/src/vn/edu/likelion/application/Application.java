@@ -1,7 +1,7 @@
 package vn.edu.likelion.application;
 
 import vn.edu.likelion.lession1.Array;
-import vn.edu.likelion.lession1.lession1;
+import vn.edu.likelion.lession2.lession2;
 import vn.edu.likelion.lession3.Number;
 
 import java.util.Scanner;
@@ -30,7 +30,7 @@ public class Application {
         int input = scanner.nextInt();
 
         System.out.println("Check whether every digit of the said integer is even or not!");
-        System.out.println(lession1.checkDigitIsEven(input));
+        System.out.println(lession2.checkDigitIsEven(input));
 
         System.out.println("\n---------------------------------------------------------");
         System.out.print("Input an integer(positive/negative): ");

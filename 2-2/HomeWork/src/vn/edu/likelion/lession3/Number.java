@@ -5,7 +5,7 @@ public class Number {
         String stringNumber = Integer.toString(number);
 
         if (stringNumber.charAt(0) == '-') {
-            stringNumber = stringNumber.substring(1);
+            stringNumber.substring(1);
         }
 
         int firstDigit = Character.getNumericValue(stringNumber.charAt(0));

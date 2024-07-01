@@ -24,7 +24,7 @@ public class CourseApp {
         course.displayDetailCourse();
         System.out.println();
 
-        course.displayStudents();
+         course.displayStudents();
 
         courseOnline.displayStudents();
     }

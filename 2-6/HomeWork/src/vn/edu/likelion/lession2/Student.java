@@ -2,30 +2,35 @@ package vn.edu.likelion.lession2;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Student {
-    private int studentId;
+    private String studentId;
     private String studentName;
-    private LocalDate dateOfBirth;
+    private LocalDate birthDate;
     private String cccd;
-    private boolean isStudying = true;
-    private Classroom classroom;
+    private boolean isActive;
     private LocalDateTime regisTime;
+    private String reasonDropOut;
 
     public Student() {}
 
-    public Student(int studentId, String studentName, LocalDate dateOfBirth, String cccd) {
-        this.studentId = studentId;
+    public Student(String studentName, LocalDate birthDate, String cccd) {
+        this.studentId = null;
         this.studentName = studentName;
-        this.dateOfBirth = dateOfBirth;
+        this.birthDate = birthDate;
         this.cccd = cccd;
+        this.isActive = true;
+        this.regisTime = LocalDateTime.now();
+        this.reasonDropOut = null;
     }
 
-    public int getStudentId() {
+    // Getters and setters
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
@@ -37,12 +42,12 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getCccd() {
@@ -53,20 +58,12 @@ public class Student {
         this.cccd = cccd;
     }
 
-    public boolean isStudying() {
-        return isStudying;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setStudying(boolean studying) {
-        isStudying = studying;
-    }
-
-    public Classroom getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(Classroom classroom) {
-        this.classroom = classroom;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public LocalDateTime getRegisTime() {
@@ -75,5 +72,32 @@ public class Student {
 
     public void setRegisTime(LocalDateTime regisTime) {
         this.regisTime = regisTime;
+    }
+
+    public String getReasonDropOut() {
+        return reasonDropOut;
+    }
+
+    public void setReasonDropOut(String reasonDropOut) {
+        this.reasonDropOut = reasonDropOut;
+    }
+
+    // Method to drop out student
+    public void dropOut(String reason) {
+        this.isActive = false;
+        this.reasonDropOut = reason;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId='" + studentId + '\'' +
+                ", studentName='" + studentName + '\'' +
+                ", birthDate=" + birthDate +
+                ", cccd='" + cccd + '\'' +
+                ", isActive=" + isActive +
+                ", regisTime=" + regisTime +
+                ", reasonDropOut='" + reasonDropOut + '\'' +
+                '}';
     }
 }

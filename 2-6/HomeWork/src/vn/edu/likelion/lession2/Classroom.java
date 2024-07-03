@@ -5,88 +5,36 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Classroom {
+    private String classId;
     private String className;
     private LocalDateTime startTime;
+    private boolean isStart;
     private static final int MAX_SEATS = 10;
-    private Teacher teacher;
+    private static final int MAX_TEACHER_COUNTER = 2;
+    private List<Teacher> teachers;
     private List<Student> students;
     private List<Student> dropStudentList;
 
-    public Classroom() {
-    }
+    public Classroom() {}
 
-    public Classroom(String className, Teacher teacher) {
+    public Classroom(String className, LocalDateTime startTime) {
+        this.classId = UUID.randomUUID().toString();
         this.className = className;
-        this.teacher = teacher;
+        this.startTime = startTime;
+        this.teachers = new ArrayList<>();
         this.students = new ArrayList<>();
         this.dropStudentList = new ArrayList<>();
     }
 
-    public void registerStudent(Student student) {
-        if (!isValidAge(student)) {
-            System.out.println("Student " + student.getStudentName() + "age must between 18 and 20 years old).");
-            return;
-        }
-
-        if (!hasAvailableSeats()) {
-            System.out.println("Classroom is full. Cannot register.");
-            return;
-        }
-
-        students.add(student);
-        student.setClassroom(this);
-        student.setRegisTime(LocalDateTime.now());
-        System.out.println("Student " + student.getStudentName() + " registered successfully.");
-
-        if (students.size() == MAX_SEATS) {
-            startClass();
-        }
+    public String getClassId() {
+        return classId;
     }
 
-    private void startClass() {
-        startTime = LocalDateTime.now();
-        System.out.println("Class " + className + " has started at " + startTime);
-    }
-
-    private boolean isValidAge(Student student) {
-        int age = Period.between(student.getDateOfBirth(), LocalDate.now()).getYears();
-        return (age >= 18 && age <= 20);
-    }
-
-    private boolean hasAvailableSeats() {
-        return students.size() < MAX_SEATS;
-    }
-
-    public void viewStudents() {
-        for (Student student : students) {
-            System.out.println("Student: " + student.getStudentName() + ", Date of Birth: " + student.getDateOfBirth() +
-                    ", CCCD: " + student.getCccd());
-        }
-    }
-
-    public void updateStudentInfo(Student student, String newName, String newCccd) {
-        student.setStudentName(newName);
-        student.setCccd(newCccd);
-        System.out.println("Updated student successfully.");
-    }
-
-    public void addDropout(Student student) {
-        students.remove(student);
-        dropStudentList.add(student);
-        student.setStudying(false);
-        System.out.println("Student " + student.getStudentName() + " dropped out ");
-    }
-
-    public void viewStudentsByTeacher() {
-        System.out.println("Students in " + teacher.getTeacherName() + "'s classes:");
-        for (Classroom classroom : teacher.getClassrooms()) {
-            for (Student student : classroom.getStudents()) {
-                System.out.println("Student: " + student.getStudentName() + ", Date of Birth: " + student.getDateOfBirth() +
-                        ", CCCD: " + student.getCccd());
-            }
-        }
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 
     public String getClassName() {
@@ -105,12 +53,20 @@ public class Classroom {
         this.startTime = startTime;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public boolean isStart() {
+        return isStart;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setStart(boolean start) {
+        isStart = start;
+    }
+
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     public List<Student> getStudents() {
@@ -127,5 +83,33 @@ public class Classroom {
 
     public void setDropStudentList(List<Student> dropStudentList) {
         this.dropStudentList = dropStudentList;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
+
+    public void updateStudent(Student student) {
+        // Implement logic to update student
+    }
+
+    public void dropOutStudent(Student student, String reason) {
+        this.students.remove(student);
+        student.setActive(false);
+        student.setReasonDropOut(reason);
+        this.dropStudentList.add(student);
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "classId='" + classId + '\'' +
+                ", className='" + className + '\'' +
+                ", startTime=" + startTime +
+                ", isStart=" + isStart +
+                ", teachers=" + teachers +
+                ", students=" + students +
+                ", dropStudentList=" + dropStudentList +
+                '}';
     }
 }

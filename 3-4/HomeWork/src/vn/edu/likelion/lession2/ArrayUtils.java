@@ -9,7 +9,6 @@ public class ArrayUtils {
         return Arrays.stream(nums)
                 .distinct()
                 .sorted(Comparator.reverseOrder())
-                .limit(2)
                 .skip(1)
                 .findFirst()
                 .orElse(null);

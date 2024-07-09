@@ -18,13 +18,13 @@ public class ListNode {
     public static ListNode MiddleNode(ListNode head) {
         if (head == null) return null;
 
-        ListNode slow = head;
-        ListNode fast = head;
+        ListNode firstNode = head;
+        ListNode secondNode = head;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        while (secondNode != null && secondNode.next != null) {
+            firstNode = firstNode.next;
+            secondNode = secondNode.next.next;
         }
-        return slow;
+        return firstNode;
     }
 }

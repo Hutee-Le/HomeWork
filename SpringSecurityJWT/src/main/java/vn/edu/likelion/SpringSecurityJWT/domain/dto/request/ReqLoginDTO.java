@@ -1,0 +1,15 @@
+package vn.edu.likelion.SpringSecurityJWT.domain.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ReqLoginDTO {
+    @NotBlank(message = "username không được để trống")
+    private String username;
+
+    @NotBlank(message = "password không được để trống")
+    private String password;
+}

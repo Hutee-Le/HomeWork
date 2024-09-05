@@ -13,6 +13,7 @@ import java.util.Collections;
 
 @Component("userDetailsService")
 public class UserDetailCustom implements UserDetailsService {
+
     @Autowired
     private UserService userService;
 
@@ -23,10 +24,11 @@ public class UserDetailCustom implements UserDetailsService {
             throw new UsernameNotFoundException("Username/password không hợp lệ");
         }
 
+        // Return authorities including role (from the entity)
         return new User(
                 user.getEmail(),
                 user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+        );
     }
 }

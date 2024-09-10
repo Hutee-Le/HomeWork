@@ -7,13 +7,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import vn.edu.likelion.SpringSecurityJWT.domain.dto.request.ChangePasswordDTO;
 import vn.edu.likelion.SpringSecurityJWT.domain.dto.request.ReqLoginDTO;
 import vn.edu.likelion.SpringSecurityJWT.domain.dto.response.ResLoginDTO;
+import vn.edu.likelion.SpringSecurityJWT.service.UserService;
+import vn.edu.likelion.SpringSecurityJWT.utils.PasswordUtil;
 import vn.edu.likelion.SpringSecurityJWT.utils.SecurityUtil;
+import vn.edu.likelion.SpringSecurityJWT.utils.error.WeakPasswordException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,6 +24,9 @@ public class AuthController {
 
     @Autowired
     private SecurityUtil securityUtil;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<ResLoginDTO> login(@Valid @RequestBody ReqLoginDTO loginDto) {
@@ -41,4 +45,25 @@ public class AuthController {
         res.setAccessToken(access_token);
         return ResponseEntity.ok().body(res);
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDTO changePasswordDTO) throws WeakPasswordException {
+        String username = SecurityUtil.getCurrentUserLogin().orElseThrow(() ->
+                new IllegalArgumentException("User not logged in"));
+
+        // Check if the new password is strong enough
+        if (!PasswordUtil.isValid(changePasswordDTO.getNewPassword())) {
+            throw new WeakPasswordException("The new password is too weak!");
+        }
+
+        boolean success = userService.changePassword(username, changePasswordDTO.getOldPassword(),
+                changePasswordDTO.getNewPassword());
+
+        if (!success) {
+            return ResponseEntity.badRequest().body("Invalid password or old password does not match!");
+        }
+
+        return ResponseEntity.ok("Password changed successfully!");
+    }
+
 }

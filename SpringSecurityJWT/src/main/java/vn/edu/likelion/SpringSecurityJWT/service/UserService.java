@@ -1,9 +1,11 @@
 package vn.edu.likelion.SpringSecurityJWT.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.edu.likelion.SpringSecurityJWT.domain.UserEntity;
 import vn.edu.likelion.SpringSecurityJWT.repository.UserRepository;
+import vn.edu.likelion.SpringSecurityJWT.utils.PasswordUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserEntity handleCreateUser(UserEntity user) {
         return this.userRepository.save(user);
@@ -47,5 +52,20 @@ public class UserService {
 
     public UserEntity handleGetUserByUsername(String username) {
         return this.userRepository.findByEmail(username);
+    }
+
+    public boolean changePassword(String username, String oldPassword, String newPassword) {
+        UserEntity user = userRepository.findByEmail(username);
+        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return false; // Invalid current password
+        }
+
+        if (!PasswordUtil.isValid(newPassword)) {
+            throw new IllegalArgumentException("Password is too weak!");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return true;
     }
 }

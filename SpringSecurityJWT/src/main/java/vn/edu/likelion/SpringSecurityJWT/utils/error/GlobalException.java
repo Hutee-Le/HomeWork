@@ -42,4 +42,14 @@ public class GlobalException {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
+
+    @ExceptionHandler(WeakPasswordException.class)
+    public ResponseEntity<RestApiResponse<Object>> handleWeakPasswordException(WeakPasswordException ex) {
+        RestApiResponse<Object> res = new RestApiResponse<>();
+        res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        res.setError(ex.getMessage());
+        res.setMessage("Password is too weak.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
 }

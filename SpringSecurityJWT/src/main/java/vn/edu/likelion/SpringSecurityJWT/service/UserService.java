@@ -68,4 +68,9 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
+    public void updatePassword(UserEntity user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

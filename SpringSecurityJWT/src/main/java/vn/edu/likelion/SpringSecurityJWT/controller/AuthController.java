@@ -8,9 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.likelion.SpringSecurityJWT.domain.UserEntity;
 import vn.edu.likelion.SpringSecurityJWT.domain.dto.request.ChangePasswordDTO;
 import vn.edu.likelion.SpringSecurityJWT.domain.dto.request.ReqLoginDTO;
 import vn.edu.likelion.SpringSecurityJWT.domain.dto.response.ResLoginDTO;
+import vn.edu.likelion.SpringSecurityJWT.service.EmailService;
 import vn.edu.likelion.SpringSecurityJWT.service.UserService;
 import vn.edu.likelion.SpringSecurityJWT.utils.PasswordUtil;
 import vn.edu.likelion.SpringSecurityJWT.utils.SecurityUtil;
@@ -27,6 +29,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<ResLoginDTO> login(@Valid @RequestBody ReqLoginDTO loginDto) {
@@ -48,7 +53,7 @@ public class AuthController {
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDTO changePasswordDTO) throws WeakPasswordException {
-        String username = SecurityUtil.getCurrentUserLogin().orElseThrow(() ->
+        String username = securityUtil.getCurrentUserLogin().orElseThrow(() ->
                 new IllegalArgumentException("User not logged in"));
 
         // Check if the new password is strong enough
@@ -66,4 +71,31 @@ public class AuthController {
         return ResponseEntity.ok("Password changed successfully!");
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        UserEntity user = userService.handleGetUserByUsername(email);
+
+        if (user != null) {
+            String token = securityUtil.createTokenForPasswordReset(user);
+            String resetLink = "http://localhost:8080/api/v1/auth/reset-password?token=" + token;
+
+            emailService.sendEmail(email, "Password Reset Request", "To reset your password, click the link below:\n" + resetLink);
+        }
+
+        return ResponseEntity.ok("If the email exists, a password reset link has been sent.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        // Validate the token and reset the password
+        String email = securityUtil.getUsernameFromToken(token);
+        UserEntity user = userService.handleGetUserByUsername(email);
+
+        if (user != null) {
+            userService.updatePassword(user, newPassword);
+            return ResponseEntity.ok("Password has been reset successfully.");
+        }
+
+        return ResponseEntity.badRequest().body("Invalid token or user not found.");
+    }
 }
